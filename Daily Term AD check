@@ -1,0 +1,21 @@
+$Users = Import-Csv -Path "C:\Users\rtalingo\OneDrive - True Blue\Desktop\dailytermcheckad.csv"
+$Results = ForEach ($User in $Users) {
+    $Account = Get-ADUser -Filter "samAccountName -eq '$($user.user)'" -Properties SamAccountName,Enabled
+    
+    If ($Account) {
+        $SamAccountName = $Account.SamAccountName
+        $Enabled = $Account.Enabled
+
+    }
+    Else {
+        $SamAccountName = $User.user
+        $Enabled = "Not in AD"
+
+    }
+    [PSCustomObject]@{
+        SamAccountName = $SamAccountName
+        Enabled = $Enabled
+    }
+}
+
+$Results | Export-Csv -Path "C:\Users\rtalingo\OneDrive - True Blue\Desktop\dailytermresults.csv" -NoTypeInformation
