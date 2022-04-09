@@ -1,0 +1,2 @@
+Import-Csv "C:\Users\rtalingo\OneDrive - True Blue\Desktop\457.csv" | foreach {
+Add-ADGroupMember -Identity "DL-PeopleReady-Connelly Region" -Members $_.sam
